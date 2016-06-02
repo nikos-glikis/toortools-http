@@ -1,8 +1,5 @@
 package com.object0r.toortools.http;
 
-/**
- * Created by User on 23/1/2016.
- */
 public class HttpHeader
 {
     String key;
