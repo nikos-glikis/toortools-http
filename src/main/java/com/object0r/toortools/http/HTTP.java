@@ -8,10 +8,11 @@ public class HTTP
 {
     /**
      * Makes the actual http request.
-     * @deprecated - Use HttpHelper.request() instead
+     *
      * @param httpRequestInformation - The object containing the http request parameters.
      * @return The http result.
      * @throws Exception
+     * @deprecated - Use HttpHelper.request() instead
      */
     public static HttpResult request(HttpRequestInformation httpRequestInformation) throws Exception
     {

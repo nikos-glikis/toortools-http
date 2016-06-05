@@ -12,15 +12,14 @@ import java.util.Map;
 
 /**
  * Created by Nikos Glikis
- *
+ * <p>
  * Uses HTTP to make basic requests.
- *
  */
 public class HttpHelper
 {
     public static HttpResult basicPostRequest(String url, String body) throws Exception
     {
-        return basicPostRequest(url, body,"");
+        return basicPostRequest(url, body, "");
     }
 
     public static HttpResult basicPostRequest(String url, String body, String cookie) throws Exception
@@ -36,6 +35,7 @@ public class HttpHelper
 
         return HttpHelper.request(httpRequestInformation);
     }
+
     public static HttpResult basicGetRequest(String url) throws Exception
     {
         return basicGetRequest(url, null);
