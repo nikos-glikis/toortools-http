@@ -21,9 +21,10 @@ public class HttpRequestInformation
     HashMap<String, String> headers = new HashMap<String, String>();
     boolean followRedirects = true;
 
-    public void setCookie(String cookie)
+    public HttpRequestInformation setCookie(String cookie)
     {
         this.setHeader("Cookie", cookie.trim());
+        return this;
     }
 
     public int getTimeoutSeconds()
@@ -31,9 +32,10 @@ public class HttpRequestInformation
         return timeoutSeconds;
     }
 
-    public void setTimeoutSeconds(int timeoutSeconds)
+    public HttpRequestInformation setTimeoutSeconds(int timeoutSeconds)
     {
         this.timeoutSeconds = timeoutSeconds;
+        return this;
     }
 
     public boolean hasTimeOut()
