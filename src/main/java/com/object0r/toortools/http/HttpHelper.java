@@ -61,6 +61,8 @@ public class HttpHelper
     {
         URL url;
         HttpURLConnection connection = null;
+        InputStream is;
+        HttpResult httpResult = new HttpResult();
         if (httpRequestInformation.getUrl() == null)
         {
             throw new Exception("Url is not set in HttpRequestInformation.");
@@ -132,10 +134,10 @@ public class HttpHelper
             {
                 connection.setInstanceFollowRedirects(false);
             }
-            InputStream is = connection.getInputStream();
+            is = connection.getInputStream();
             byte[] bytes = IOUtils.toByteArray(is);
 
-            HttpResult httpResult = new HttpResult();
+
             httpResult.setContent(bytes);
 
             if (connection.getErrorStream() != null)
@@ -143,7 +145,7 @@ public class HttpHelper
                 is = connection.getErrorStream();
                 bytes = IOUtils.toByteArray(is);
                 httpResult.setErrorContent(bytes);
-                System.out.println(new String(bytes));
+                //System.out.println(new String(bytes));
             }
 
 
@@ -161,19 +163,16 @@ public class HttpHelper
                     }
                 }
             }
-
-            return httpResult;
-
         }
         catch (Exception e)
         {
-            /*            if (connection.getErrorStream()!=null)
-            {*/
-/*            InputStream is = connection.getErrorStream();
-            byte[] bytes = IOUtils.toByteArray(is);
-            //httpResult.setErrorContent(bytes);
-            System.out.println(new String(bytes));*/
-            //          }
+            if (connection.getErrorStream() != null)
+            {
+                is = connection.getErrorStream();
+                byte[] bytes = IOUtils.toByteArray(is);
+                httpResult.setErrorContent(bytes);
+                //System.out.println(new String(bytes));
+            }
             try
             {
                 connection.disconnect();
@@ -183,9 +182,14 @@ public class HttpHelper
 
             }
 
-
-            throw e;
-
+            if (httpRequestInformation.isThrowExceptions())
+            {
+                throw e;
+            }
+            else
+            {
+                httpResult.setThrownException(e);
+            }
         }
         finally
         {
@@ -195,5 +199,6 @@ public class HttpHelper
                 connection.disconnect();
             }
         }
+        return httpResult;
     }
 }

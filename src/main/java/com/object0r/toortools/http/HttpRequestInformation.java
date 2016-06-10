@@ -18,6 +18,10 @@ public class HttpRequestInformation
     String body;
     Proxy proxy = Proxy.NO_PROXY;
     int timeoutSeconds = 0;
+
+    boolean throwExceptions = false;
+
+
     HashMap<String, String> headers = new HashMap<String, String>();
     boolean followRedirects = true;
 
@@ -194,4 +198,15 @@ public class HttpRequestInformation
         this.followRedirects = followRedirects;
         return this;
     }
+
+    public boolean isThrowExceptions()
+    {
+        return throwExceptions;
+    }
+
+    public void setThrowExceptions(boolean throwExceptions)
+    {
+        this.throwExceptions = throwExceptions;
+    }
+
 }

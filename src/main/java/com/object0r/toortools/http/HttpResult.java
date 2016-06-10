@@ -10,6 +10,7 @@ public class HttpResult
     String cookie;
     ArrayList<HttpHeader> headers = new ArrayList<HttpHeader>();
     private byte[] errorContent;
+    Exception thrownException;
 
     /**
      * Adds a header. (can be multiple Set-Cookie for example)
@@ -22,7 +23,7 @@ public class HttpResult
     public HttpHeader getHeader(String key)
     {
         HttpHeader theHeader = null;
-        for (HttpHeader httpHeader: headers)
+        for (HttpHeader httpHeader : headers)
         {
             if (httpHeader.getKey().equals(key))
             {
@@ -49,6 +50,7 @@ public class HttpResult
 
     /**
      * Returns A Vector containing all Cookies Values.
+     *
      * @return
      */
     public Vector<String> getCookiesVector()
@@ -65,6 +67,7 @@ public class HttpResult
     /**
      * Returns cookies from HttpResult as browser is sending them.
      * //TODO clean these a bit.
+     *
      * @return
      */
     public String getCookiesString()
@@ -80,7 +83,7 @@ public class HttpResult
                 c = c.substring(0, c.indexOf(";"));
             }
 
-             cookies = cookies + c +"; ";
+            cookies = cookies + c + "; ";
         }
         return cookies;
     }
@@ -141,5 +144,17 @@ public class HttpResult
     public String getErrorContentAsString()
     {
         return new String(errorContent);
+    }
+
+
+
+    public Exception getThrownException()
+    {
+        return thrownException;
+    }
+
+    public void setThrownException(Exception thrownException)
+    {
+        this.thrownException = thrownException;
     }
 }
