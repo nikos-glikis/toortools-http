@@ -61,8 +61,13 @@ public class HttpHelper
     {
         URL url;
         HttpURLConnection connection = null;
+        if (httpRequestInformation.getUrl() == null)
+        {
+            throw new Exception("Url is not set in HttpRequestInformation.");
+        }
         try
         {
+
             // Create connection
             url = new URL(httpRequestInformation.getUrl());
             connection = (HttpURLConnection) url.openConnection(httpRequestInformation.getProxy());
