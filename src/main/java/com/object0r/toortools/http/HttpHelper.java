@@ -65,6 +65,11 @@ public class HttpHelper
         {
             throw new Exception("Url is not set in HttpRequestInformation.");
         }
+        if (httpRequestInformation.getProxy() == null)
+        {
+            throw new Exception("Proxy is null HttpRequestInformation.");
+        }
+
         try
         {
 
