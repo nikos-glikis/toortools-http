@@ -204,9 +204,16 @@ public class HttpRequestInformation
         return throwExceptions;
     }
 
-    public void setThrowExceptions(boolean throwExceptions)
+    public HttpRequestInformation setThrowExceptions(boolean throwExceptions)
     {
         this.throwExceptions = throwExceptions;
+        return this;
+    }
+
+    public HttpRequestInformation setUserAgent(String userAgent)
+    {
+        this.setHeader("User-Agent",userAgent);
+        return this;
     }
 
 }
