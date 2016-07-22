@@ -1,6 +1,5 @@
 package com.object0r.toortools.http;
 
-
 import java.util.ArrayList;
 import java.util.Vector;
 

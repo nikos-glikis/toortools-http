@@ -99,16 +99,12 @@ public class HttpHelper
             if (httpRequestInformation.isMethodPost())
             {
                 connection.setRequestMethod("POST");
-                if (!httpRequestInformation.hasHeader("Content-Type"))
+                if (connection.getRequestProperty("Content-Type") == null)
                 {
                     connection.setRequestProperty("Content-Type",
                             "application/x-www-form-urlencoded");
                 }
-                else
-                {
-                    connection.setRequestProperty("Content-Type",
-                            httpRequestInformation.getHeader("Content-Type"));
-                }
+
                 connection.setRequestProperty("Content-Length", ""
                         + Integer.toString(httpRequestInformation.getBody().getBytes().length));
                 connection.setUseCaches(false);
