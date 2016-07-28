@@ -93,7 +93,7 @@ public class HttpHelper
             if (httpRequestInformation.hasTimeOut())
             {
                 connection.setReadTimeout(httpRequestInformation.getTimeoutSeconds() * 1000);
-                connection.setReadTimeout(httpRequestInformation.getTimeoutSeconds() * 1000);
+                connection.setConnectTimeout(httpRequestInformation.getTimeoutSeconds() * 1000);
             }
 
             if (httpRequestInformation.isMethodPost())
