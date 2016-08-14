@@ -11,6 +11,18 @@ public class HttpResult
     private byte[] errorContent;
     Exception thrownException;
 
+
+    public boolean isSuccessfull()
+    {
+        if (errorContent == null)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
     /**
      * Adds a header. (can be multiple Set-Cookie for example)
      */
@@ -144,7 +156,6 @@ public class HttpResult
     {
         return new String(errorContent);
     }
-
 
 
     public Exception getThrownException()
