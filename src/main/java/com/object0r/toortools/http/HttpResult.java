@@ -6,11 +6,26 @@ import java.util.Vector;
 public class HttpResult
 {
     byte content[];
+    int responseCode=0;
     String cookie;
     ArrayList<HttpHeader> headers = new ArrayList<HttpHeader>();
     private byte[] errorContent;
     Exception thrownException;
 
+    public int getResponseCode()
+    {
+        return responseCode;
+    }
+
+    public void setResponseCode(int responseCode)
+    {
+        this.responseCode = responseCode;
+    }
+
+    public void setHeaders(ArrayList<HttpHeader> headers)
+    {
+        this.headers = headers;
+    }
 
     public boolean isSuccessfull()
     {

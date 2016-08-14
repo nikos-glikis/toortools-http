@@ -122,6 +122,7 @@ public class HttpHelper
                 connection.setRequestMethod(httpRequestInformation.getMethod());
             }
 
+
             if (httpRequestInformation.isFollowRedirects())
             {
                 connection.setInstanceFollowRedirects(true);
@@ -144,6 +145,7 @@ public class HttpHelper
                 //System.out.println(new String(bytes));
             }
 
+            httpResult.setResponseCode(connection.getResponseCode());
 
             Map<String, List<String>> map = connection.getHeaderFields();
             for (Map.Entry<String, List<String>> entry : map.entrySet())
