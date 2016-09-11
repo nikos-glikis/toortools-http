@@ -171,6 +171,11 @@ public class HttpHelper
                 httpResult.setErrorContent(bytes);
                 //System.out.println(new String(bytes));
             }
+            else
+            {
+                httpResult.setErrorContent("".getBytes());
+            }
+
             try
             {
                 connection.disconnect();

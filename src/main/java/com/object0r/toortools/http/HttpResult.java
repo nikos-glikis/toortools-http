@@ -6,10 +6,10 @@ import java.util.Vector;
 public class HttpResult
 {
     byte content[];
-    int responseCode=0;
+    int responseCode = 0;
     String cookie;
     ArrayList<HttpHeader> headers = new ArrayList<HttpHeader>();
-    private byte[] errorContent;
+
     Exception thrownException;
 
     public int getResponseCode()
@@ -29,7 +29,7 @@ public class HttpResult
 
     public boolean isSuccessfull()
     {
-        if (errorContent == null)
+        if (thrownException != null)
         {
             return true;
         }
@@ -38,6 +38,7 @@ public class HttpResult
             return false;
         }
     }
+
     /**
      * Adds a header. (can be multiple Set-Cookie for example)
      */
@@ -157,19 +158,22 @@ public class HttpResult
         this.cookie = cookie;
     }
 
+    @Deprecated
     public void setErrorContent(byte[] errorContent)
     {
-        this.errorContent = errorContent;
+        this.content = errorContent;
     }
 
+    @Deprecated
     public byte[] getErrorContent()
     {
-        return errorContent;
+        return content;
     }
 
+    @Deprecated
     public String getErrorContentAsString()
     {
-        return new String(errorContent);
+        return new String(content);
     }
 
 
