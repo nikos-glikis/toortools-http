@@ -29,7 +29,7 @@ public class HttpResult
 
     public boolean isSuccessfull()
     {
-        if (thrownException != null)
+        if (thrownException == null)
         {
             return true;
         }
