@@ -149,7 +149,14 @@ public class HttpRequestInformation
 
     public String getBody()
     {
-        return body;
+        if (body == null)
+        {
+            return "";
+        }
+        else
+        {
+            return body;
+        }
     }
 
     public HttpRequestInformation setBody(String body)
@@ -212,7 +219,7 @@ public class HttpRequestInformation
 
     public HttpRequestInformation setUserAgent(String userAgent)
     {
-        this.setHeader("User-Agent",userAgent);
+        this.setHeader("User-Agent", userAgent);
         return this;
     }
 
