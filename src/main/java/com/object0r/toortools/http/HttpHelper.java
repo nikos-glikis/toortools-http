@@ -79,6 +79,7 @@ public class HttpHelper
             url = new URL(httpRequestInformation.getUrl());
             connection = (HttpURLConnection) url.openConnection(httpRequestInformation.getProxy());
 
+
             Iterator<Map.Entry<String, String>> it = httpRequestInformation.getHeaders().entrySet().iterator();
             while (it.hasNext())
             {
@@ -164,7 +165,8 @@ public class HttpHelper
         }
         catch (Exception e)
         {
-            if (connection.getErrorStream() != null)
+
+            if (connection != null && connection.getErrorStream() != null)
             {
                 is = connection.getErrorStream();
                 byte[] bytes = IOUtils.toByteArray(is);
