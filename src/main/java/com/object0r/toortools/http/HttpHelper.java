@@ -140,6 +140,8 @@ public class HttpHelper
 
             if (connection.getErrorStream() != null)
             {
+
+
                 is = connection.getErrorStream();
                 bytes = IOUtils.toByteArray(is);
                 httpResult.setErrorContent(bytes);
@@ -171,6 +173,7 @@ public class HttpHelper
                 is = connection.getErrorStream();
                 byte[] bytes = IOUtils.toByteArray(is);
                 httpResult.setErrorContent(bytes);
+                httpResult.responseCode = ((HttpURLConnection)connection).getResponseCode();
                 //System.out.println(new String(bytes));
             }
             else
