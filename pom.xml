@@ -122,7 +122,7 @@
     <scm>
     <url>https://github.com/nikos-glikis/toortools-http</url>
     <connection>scm:git:git@github.com:nikos-glikis/toortools-http.git</connection>
-    <developerConnection>scm:git:git@github.com:nikos-glikis/toortools.gitt</developerConnection>
+    <developerConnection>scm:git:git@github.com:nikos-glikis/toortools.git</developerConnection>
 </scm>
 
 </project>
