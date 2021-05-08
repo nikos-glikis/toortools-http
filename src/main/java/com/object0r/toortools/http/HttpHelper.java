@@ -15,19 +15,15 @@ import java.util.Map;
  * <p>
  * Uses HTTP to make basic requests.
  */
-public class HttpHelper
-{
-    public static HttpResult basicPostRequest(String url, String body) throws Exception
-    {
+public class HttpHelper {
+    public static HttpResult basicPostRequest(String url, String body) throws Exception {
         return basicPostRequest(url, body, "");
     }
 
-    public static HttpResult basicPostRequest(String url, String body, String cookie) throws Exception
-    {
+    public static HttpResult basicPostRequest(String url, String body, String cookie) throws Exception {
         HttpRequestInformation httpRequestInformation = new HttpRequestInformation();
         httpRequestInformation.setUrl(url);
-        if (cookie != null)
-        {
+        if (cookie != null) {
             httpRequestInformation.setCookie(cookie);
         }
         httpRequestInformation.setMethodPost();
@@ -36,17 +32,14 @@ public class HttpHelper
         return HttpHelper.request(httpRequestInformation);
     }
 
-    public static HttpResult basicGetRequest(String url) throws Exception
-    {
+    public static HttpResult basicGetRequest(String url) throws Exception {
         return basicGetRequest(url, null);
     }
 
-    public static HttpResult basicGetRequest(String url, String cookie) throws Exception
-    {
+    public static HttpResult basicGetRequest(String url, String cookie) throws Exception {
         HttpRequestInformation httpRequestInformation = new HttpRequestInformation();
         httpRequestInformation.setUrl(url);
-        if (cookie != null)
-        {
+        if (cookie != null) {
             httpRequestInformation.setCookie(cookie);
         }
         httpRequestInformation.setMethodGet();
@@ -57,23 +50,19 @@ public class HttpHelper
     }
 
 
-    public static HttpResult request(HttpRequestInformation httpRequestInformation) throws Exception
-    {
+    public static HttpResult request(HttpRequestInformation httpRequestInformation) throws Exception {
         URL url;
         HttpURLConnection connection = null;
         InputStream is;
         HttpResult httpResult = new HttpResult();
-        if (httpRequestInformation.getUrl() == null)
-        {
+        if (httpRequestInformation.getUrl() == null) {
             throw new Exception("Url is not set in HttpRequestInformation.");
         }
-        if (httpRequestInformation.getProxy() == null)
-        {
+        if (httpRequestInformation.getProxy() == null) {
             throw new Exception("Proxy is null HttpRequestInformation.");
         }
 
-        try
-        {
+        try {
 
             // Create connection
             url = new URL(httpRequestInformation.getUrl());
@@ -81,8 +70,7 @@ public class HttpHelper
 
 
             Iterator<Map.Entry<String, String>> it = httpRequestInformation.getHeaders().entrySet().iterator();
-            while (it.hasNext())
-            {
+            while (it.hasNext()) {
                 Map.Entry<String, String> pair = it.next();
                 connection.setRequestProperty(pair.getKey(), pair.getValue());
                 it.remove();
@@ -91,17 +79,14 @@ public class HttpHelper
             //TODO maybe put below in helper.
             connection.setRequestProperty("Content-Language", "en-US");
 
-            if (httpRequestInformation.hasTimeOut())
-            {
+            if (httpRequestInformation.hasTimeOut()) {
                 connection.setReadTimeout(httpRequestInformation.getTimeoutSeconds() * 1000);
                 connection.setConnectTimeout(httpRequestInformation.getTimeoutSeconds() * 1000);
             }
 
-            if (httpRequestInformation.isMethodPost())
-            {
+            if (httpRequestInformation.isMethodPost()) {
                 connection.setRequestMethod("POST");
-                if (connection.getRequestProperty("Content-Type") == null)
-                {
+                if (connection.getRequestProperty("Content-Type") == null) {
                     connection.setRequestProperty("Content-Type",
                             "application/x-www-form-urlencoded");
                 }
@@ -117,19 +102,14 @@ public class HttpHelper
                 wr.writeBytes(httpRequestInformation.getBody());
                 wr.flush();
                 wr.close();
-            }
-            else
-            {
+            } else {
                 connection.setRequestMethod(httpRequestInformation.getMethod());
             }
 
 
-            if (httpRequestInformation.isFollowRedirects())
-            {
+            if (httpRequestInformation.isFollowRedirects()) {
                 connection.setInstanceFollowRedirects(true);
-            }
-            else
-            {
+            } else {
                 connection.setInstanceFollowRedirects(false);
             }
             is = connection.getInputStream();
@@ -138,8 +118,7 @@ public class HttpHelper
 
             httpResult.setContent(bytes);
 
-            if (connection.getErrorStream() != null)
-            {
+            if (connection.getErrorStream() != null) {
 
 
                 is = connection.getErrorStream();
@@ -151,59 +130,58 @@ public class HttpHelper
             httpResult.setResponseCode(connection.getResponseCode());
 
             Map<String, List<String>> map = connection.getHeaderFields();
-            for (Map.Entry<String, List<String>> entry : map.entrySet())
-            {
-                if (entry.getKey() != null)
-                {
+            for (Map.Entry<String, List<String>> entry : map.entrySet()) {
+                if (entry.getKey() != null) {
                     List<String> l = entry.getValue();
-                    Iterator<String> iter = l.iterator();
-                    for (String c : l)
-                    {
+
+                    for (String c : l) {
                         httpResult.addHeader(entry.getKey(), c);
                         //cookies += c +"; ";
                     }
                 }
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
 
-            if (connection != null && connection.getErrorStream() != null)
-            {
+            if (connection != null && connection.getErrorStream() != null) {
                 is = connection.getErrorStream();
                 byte[] bytes = IOUtils.toByteArray(is);
                 httpResult.setErrorContent(bytes);
-                httpResult.responseCode = ((HttpURLConnection)connection).getResponseCode();
+                httpResult.responseCode = ((HttpURLConnection) connection).getResponseCode();
                 //System.out.println(new String(bytes));
-            }
-            else
-            {
+            } else {
                 httpResult.setErrorContent("".getBytes());
+                if (connection != null) {
+                    httpResult.responseCode = ((HttpURLConnection) connection).getResponseCode();
+                    Map<String, List<String>> map = connection.getHeaderFields();
+                    if (map != null && map.size() > 0) {
+                        for (Map.Entry<String, List<String>> entry : map.entrySet()) {
+                            if (entry.getKey() != null) {
+                                List<String> l = entry.getValue();
+
+                                for (String c : l) {
+                                    httpResult.addHeader(entry.getKey(), c);
+                                    //cookies += c +"; ";
+                                }
+                            }
+                        }
+                    }
+                }
             }
 
-            try
-            {
+            try {
                 connection.disconnect();
-            }
-            catch (Exception ee)
-            {
+            } catch (Exception ee) {
 
             }
 
-            if (httpRequestInformation.isThrowExceptions())
-            {
+            if (httpRequestInformation.isThrowExceptions()) {
                 throw e;
-            }
-            else
-            {
+            } else {
                 httpResult.setThrownException(e);
             }
-        }
-        finally
-        {
+        } finally {
 
-            if (connection != null)
-            {
+            if (connection != null) {
                 connection.disconnect();
             }
         }

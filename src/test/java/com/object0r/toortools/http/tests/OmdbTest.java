@@ -220,4 +220,27 @@ public class OmdbTest
             Assert.assertEquals(true, false);
         }
     }
+//    @Test
+//    public void test5002()
+//    {
+//        try
+//        {
+//
+//            HttpRequestInformation httpRequestInformation = new HttpRequestInformation();
+//            httpRequestInformation.setMethodGet();
+//            httpRequestInformation.setUserAgent("Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:87.0) Gecko/20100101 Firefox/87.0");
+//            httpRequestInformation.setThrowExceptions(false);
+//
+//            httpRequestInformation.setUrl("http://leksiko.net");
+//
+//            HttpResult httpResult = HttpHelper.request(httpRequestInformation);
+//            Assert.assertEquals(httpResult.getResponseCode(),500);
+//            Assert.assertTrue(httpResult.getContentAsString().contains("A generic error message, given when an unexpected condition was encountered and no more specific message is suitable."));
+//        }
+//        catch (Exception e)
+//        {
+//            e.printStackTrace();
+//            Assert.assertEquals(true, false);
+//        }
+//    }
 }
