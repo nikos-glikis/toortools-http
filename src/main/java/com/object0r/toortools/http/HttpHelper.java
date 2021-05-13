@@ -151,19 +151,23 @@ public class HttpHelper {
             } else {
                 httpResult.setErrorContent("".getBytes());
                 if (connection != null) {
-                    httpResult.responseCode = ((HttpURLConnection) connection).getResponseCode();
-                    Map<String, List<String>> map = connection.getHeaderFields();
-                    if (map != null && map.size() > 0) {
-                        for (Map.Entry<String, List<String>> entry : map.entrySet()) {
-                            if (entry.getKey() != null) {
-                                List<String> l = entry.getValue();
+                    try {
+                        httpResult.responseCode = ((HttpURLConnection) connection).getResponseCode();
+                        Map<String, List<String>> map = connection.getHeaderFields();
+                        if (map != null && map.size() > 0) {
+                            for (Map.Entry<String, List<String>> entry : map.entrySet()) {
+                                if (entry.getKey() != null) {
+                                    List<String> l = entry.getValue();
 
-                                for (String c : l) {
-                                    httpResult.addHeader(entry.getKey(), c);
-                                    //cookies += c +"; ";
+                                    for (String c : l) {
+                                        httpResult.addHeader(entry.getKey(), c);
+                                        //cookies += c +"; ";
+                                    }
                                 }
                             }
                         }
+                    } catch (Exception ee) {
+
                     }
                 }
             }
